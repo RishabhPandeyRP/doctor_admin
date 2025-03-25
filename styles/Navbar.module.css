@@ -1,0 +1,29 @@
+.navDiv{
+    width: 100%;
+    box-sizing: border-box;
+    border: 0px solid red;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 3%;
+}
+
+.imgWrapper{
+    position: relative;
+    width: 20%;
+    height: 100%;
+    border: 0px solid red;
+}
+
+.docBtn{
+    font-size: 18px;
+    border: 1px solid #1c4a2a;
+    background-color: #1c4a2a;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+

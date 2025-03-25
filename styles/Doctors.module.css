@@ -1,0 +1,35 @@
+.docDiv{
+    box-sizing: border-box;
+    border: 1px solid red;
+    padding: 1% 4%;
+    width: 80%;
+}
+
+.docStat{
+    border: 1px solid #1c4a2a;
+    background-color: #1c4a2a;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 2% 5%;
+    border-radius: 10px;
+    font-size: 30px;
+    font-weight: 500;
+    width: 93%;
+    margin: 0% auto;
+    margin-bottom: 2%;
+}
+
+.docContainer{
+    overflow-y: scroll;
+    height: 85%;
+    width: 98%;
+    margin : 0 auto;
+    border: 0px solid red;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.docContainer::-webkit-scrollbar {
+    display: none;
+}
