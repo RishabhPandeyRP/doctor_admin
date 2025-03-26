@@ -2,6 +2,9 @@ import React from "react"
 import styles from "@/styles/DocCard.module.css"
 import { Doctor } from "@/data/doctors.types"
 import { DoctorBackend } from "@/data/doctors.types"
+// import { useRouter } from "next/router"
+import { redirect } from "next/navigation"
+import Image from "next/image"
 
 interface DocCardParams{
     doc: DoctorBackend
@@ -9,12 +12,19 @@ interface DocCardParams{
 }
 
 const DocCard = ({doc }:DocCardParams)=>{
+    // const router = useRouter()
+
     return(
         <div className={styles.docCardDiv}
-            // onClick={()=>onClick(doc.id)}
+             onClick={()=>{
+                console.log("from admin doc card " , doc.id)
+                redirect(`doctors/${doc.id}`)
+            }}
             >
             <div className={styles.docImgContainer}>
-                <div className={styles.docImg}></div>
+                <div className={styles.docImg}>
+                    <Image src={doc.photo_url || "/WhatsApp (1).svg"} alt="profile image" fill></Image>
+                </div>
             </div>
 
             <div className={styles.docInfo}>

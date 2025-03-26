@@ -29,6 +29,7 @@
     .docImg{
     width: 120px;
     height: 120px;
+    position: relative;
     border-radius: 50%;
     background-color: #cbd5e0;
     border: 0px solid green;

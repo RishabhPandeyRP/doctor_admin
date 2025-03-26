@@ -5,6 +5,7 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 // import { headers } from "next/headers";
 import { usePathname } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 
 
 export default function RootLayout({
@@ -25,6 +26,7 @@ export default function RootLayout({
           {children}
         </div>
         <Footer></Footer>
+        <Toaster position="top-right"></Toaster>
       </body>
     </html>
   );

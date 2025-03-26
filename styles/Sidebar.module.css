@@ -1,12 +1,12 @@
 .sideDiv{
     width: 20%;
     height: 100%;
-    border: 1px solid red;
+    border: 0px solid red;
 }
 
-.imgContainer{
+/* .imgContainer{
     
-}
+} */
 
 .navList{
     display: flex;
@@ -24,6 +24,7 @@
     border-radius: 5px;
     width: 90%;
     margin: 0 auto;
+    cursor: pointer;
 }
 
 .active{

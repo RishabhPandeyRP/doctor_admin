@@ -18,6 +18,7 @@ export interface Doctor {
     gender: string;
     imageUrl: string;
     diseases: string[];
+    photo_url:string
   }
 
   export interface DoctorExtended{
