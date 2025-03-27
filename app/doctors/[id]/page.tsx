@@ -18,7 +18,7 @@ export default function DocProfile() {
     const [isEdit, setIsEdit] = useState<boolean>(false)
     const [profile, setProfile] = useState<any>(null)
     const [image, setImage] = useState<File | null>(null)
-    const [loading , setLoading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
 
     // const Cookie = await cookies()
     // const token = Cookie.get("token")?.value;
@@ -104,7 +104,7 @@ export default function DocProfile() {
                 diseases: (profile.diseases)
             }
 
-            console.log("this is payload " , payload)
+            console.log("this is payload ", payload)
 
             const detailsRes = await axios.put(`http://localhost:5000/doctors/${id}`, payload, {
                 headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
@@ -123,8 +123,45 @@ export default function DocProfile() {
 
 
 
-    const bookingNavigate = () => {
-        redirect(`/doctors2/${id}/bookSlot`)
+    const slotsGenerateHandler = async () => {
+
+        try {
+            setLoading(true)
+            const date = new Date()
+
+            const slotsPayload = {
+                doctor_id: id,
+                date: date.toISOString().split("T")[0]
+            }
+
+            const isSlots = await axios.get(`http://localhost:5000/slots/${slotsPayload.doctor_id}/${slotsPayload.date}` , {
+                headers: { Authorization: `Bearer ${token}`}
+            })
+
+            if(isSlots.status == 200 && isSlots.data.length !== 0){
+                toast.error("Slots already generated for this date")
+                setLoading(false)
+                return
+            }
+
+            console.log("slots payload ", slotsPayload)
+
+            const response = await axios.post(`http://localhost:5000/slots/generate`, slotsPayload, {
+                headers: {"Content-Type": "application/json",Authorization: `Bearer ${token}` },
+            });
+
+            if(response.status == 200){
+                toast.success("slots generated for today")
+                setLoading(false)
+                return
+            }
+
+
+        } catch (error:any) {
+            console.log("error while generating the slots " , error.message)
+            toast.error("Error while generating the slots")
+            setLoading(false)
+        }
     }
     console.log("profile , ", profile)
 
@@ -227,13 +264,15 @@ export default function DocProfile() {
                 </div>
             </div>
 
-            {/* <Link href={`/doctors2/${id}/bookSlot`}>
-                <button className={styles.profileBtn}>Book an Appointment</button>
-            </Link> */}
+
+            <button className={styles.profileBtn} onClick={slotsGenerateHandler}>
+                {loading ? "Generating..." : "Generate Today's Slots"}
+            </button>
+
 
             {isEdit && <button className={styles.saveButton} onClick={handleSave}>
                 {loading ? "saving..." : "Save Changes"}
-                </button>}
+            </button>}
 
 
         </div>

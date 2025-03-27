@@ -60,7 +60,7 @@ const CreateDoc = () => {
                 console.log(userResponse.data)
                 toast.success("user registered")
                 // setLoading(false)
-                
+
             }
 
             //get userid
@@ -82,7 +82,7 @@ const CreateDoc = () => {
                     // setIsEdit(false);
                     toast.error("error while updating the image")
                     // setLoading(false)
-                    
+
                 }
 
                 imageUrl = imageRes.url
@@ -103,17 +103,30 @@ const CreateDoc = () => {
 
             console.log("payload for register doc", docPayload)
 
-            const docResponse = await axios.post("http://localhost:5000/doctors/register", docPayload, { headers: { Authorization: `Bearer ${token}`,"Content-Type": "application/json" } })
+            const docResponse = await axios.post("http://localhost:5000/doctors/register", docPayload, { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } })
 
             if (docResponse.status == 200) {
                 console.log(docResponse.data)
                 toast.success("doc registered")
+
+                const mailPayload = {
+                    toMail: formData.email,
+                    subject: "Doctor profile created on Medcare",
+                    text: `Hey Doc, You are registered on MedCare with username as ${formData.name} and email as ${formData.email}`
+                }
+
+                const mailResponse = await axios.post("http://localhost:5000/api/mail", mailPayload, { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } })
+
+                if(mailResponse.status == 200){
+                    toast.success("Mail sent to doctor")
+                }
+
                 setLoading(false)
                 return
             }
 
-        } catch (error:any) {
-            console.log("error while registering doc " , error.message)
+        } catch (error: any) {
+            console.log("error while registering doc ", error.message)
             toast.error("error while registering doc")
         }
     }
