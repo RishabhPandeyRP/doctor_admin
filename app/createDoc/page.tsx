@@ -44,7 +44,8 @@ const CreateDoc = () => {
             const userPayload = {
                 email: formData.email,
                 password: formData.password,
-                name: formData.name
+                name: formData.name,
+                role:"doctor"
             }
 
             console.log("payload for register user", userPayload)
@@ -85,7 +86,9 @@ const CreateDoc = () => {
 
                 }
 
-                imageUrl = imageRes.url
+                console.log("image of doctor" , imageRes)
+
+                imageUrl = imageRes.data.url
             }
 
 

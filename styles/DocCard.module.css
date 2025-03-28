@@ -33,6 +33,12 @@
     border-radius: 50%;
     background-color: #cbd5e0;
     border: 0px solid green;
+    overflow: hidden;
+    }
+
+    .docImg{
+        border-radius: 50%;
+        object-fit: cover;
     }
     
     .docInfo{
