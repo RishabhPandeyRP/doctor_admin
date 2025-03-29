@@ -6,7 +6,7 @@ import axios from "axios"
 import toast from "react-hot-toast"
 import { useState } from "react"
 
-const login = () => {
+const Login = () => {
     const router = useRouter()
     // const {login} = useAuthContext()
     const [formData , setFormData] = useState({
@@ -15,6 +15,7 @@ const login = () => {
     })
     const [loading , setLoading] = useState(false)
     const [message , setMessage] = useState("")
+    const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API_BASE_URL;
 
     const changeHandler = (e:React.ChangeEvent<HTMLInputElement>)=>{
         setFormData({...formData , [e.target.name]:e.target.value})
@@ -27,7 +28,7 @@ const login = () => {
             setLoading(true)
             setMessage("")
             console.log("this is form data" , formData)
-            const response = await axios.post("http://localhost:5000/auth/login-admin" , formData , {headers:{"Content-Type":"application/json"}})
+            const response = await axios.post(`${API_BASE_URL}/auth/login-admin` , formData , {headers:{"Content-Type":"application/json"}})
              setMessage(response.data.message)
             console.log(message)
             console.log("login response ", response.data)
@@ -53,8 +54,13 @@ const login = () => {
             toast.error("Some error occured")
             setLoading(false)
             
-        } catch (error:any) {
-            console.log("error :login" , error.message)
+        } catch (error:unknown) {
+            
+            if (error instanceof Error) {
+                console.log("error :login" , error.message)
+            } else {
+                console.log("Unknown error occurred at :login");
+            }
             toast.error("Error while logging up")
             setLoading(false)
         }
@@ -82,7 +88,7 @@ const login = () => {
                     <input type="password" name="password" id="" value={formData.password} placeholder="password" onChange={changeHandler} className={styles.passInput} />
                 </div>
 
-                <button onClick={loginHandler} className={styles.loginBtn}>
+                <button onClick={loginHandler} className={styles.loginBtn} disabled={loading}>
                     {loading ? "logging you in..." : "login"}
                 </button>
 
@@ -91,4 +97,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login

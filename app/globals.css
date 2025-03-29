@@ -1,3 +1,11 @@
+:root {
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+button {
+  font-family: inherit; /* Inherit from parent */
+}
+
 html,
 body {
   max-width: 100vw;
@@ -18,5 +26,6 @@ a {
 .layout-content{
   display: flex;
   width: 100%;
-  height: 80%;
+  height: 100%;
+  max-height: fit-content;
 }

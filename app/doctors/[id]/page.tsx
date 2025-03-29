@@ -1,39 +1,47 @@
 "use client"
 import styles from "@/styles/DocProfile.module.css"
 import React from "react"
-import { notFound } from "next/navigation"
-import { redirect } from "next/navigation"
-import Link from "next/link"
+// import { notFound } from "next/navigation"
+// import { redirect } from "next/navigation"
+// import Link from "next/link"
 import axios from "axios"
 // import { cookies } from "next/headers"
 import Cookies from "js-cookie"
 import Image from "next/image"
 import { useState, useEffect } from "react"
-import { use } from "react";
+// import { use } from "react";
 import { useParams } from "next/navigation"
 import toast from "react-hot-toast"
 
+interface DoctorProfile {
+    doctor_name: string;
+    specialty: string;
+    photo_url: string;
+    rating: number;
+    gender: string;
+    experience: string;
+    diseases: string[];
+}
 
 export default function DocProfile() {
     const [isEdit, setIsEdit] = useState<boolean>(false)
-    const [profile, setProfile] = useState<any>(null)
+    const [profile, setProfile] = useState<DoctorProfile | null>(null)
     const [image, setImage] = useState<File | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
+    const [isGenerating , setIsGenerating] = useState<boolean>(false)
 
     // const Cookie = await cookies()
     // const token = Cookie.get("token")?.value;
     const params = useParams()
     const id = params?.id
     const token = Cookies.get("admin-token")
+    const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API_BASE_URL;
 
 
-    if (!token || !id) {
-        return notFound()
-    }
-
+    
     const fetcher = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/doctors/${id}`, {
+            const response = await axios.get(`${API_BASE_URL}/doctors/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -42,14 +50,23 @@ export default function DocProfile() {
             console.log("response from profile is ", response.data.docname)
 
             setProfile(response.data.docname)
-        } catch (error: any) {
-            console.log("Error occured : ", error.message)
+        } catch (error: unknown) {
+            
+            if (error instanceof Error) {
+                console.log("Error occured : ", error.message)
+            } else {
+                console.log("Unknown error occurred ");
+            }
         }
     }
 
     useEffect(() => {
+        if (!token || !id) {
+            return 
+        }
+    
         fetcher()
-    }, [])
+    }, [token, id])
 
     if (!profile) return <div>Loading...</div>
 
@@ -59,10 +76,10 @@ export default function DocProfile() {
         // setProfile({ ...profile, [e.target.name]: e.target.value });
         const { name, value } = e.target;
 
-        setProfile((prev: any) => ({
+        setProfile((prev) => prev ?({
             ...prev,
             [name]: name === "diseases" ? value.split(",").map((d) => d.trim()) : value,
-        }));
+        }):prev);
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +97,7 @@ export default function DocProfile() {
                 const formData = new FormData();
                 if (image) formData.append("image", image);
 
-                const imageRes = await axios.post(`http://localhost:5000/api/upload`, formData, {
+                const imageRes = await axios.post(`${API_BASE_URL}/api/upload`, formData, {
                     headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
                 });
 
@@ -91,7 +108,7 @@ export default function DocProfile() {
                     return
                 }
 
-                imageUrl = imageRes.url
+                imageUrl = imageRes.data.url
             }
 
             const payload = {
@@ -106,15 +123,20 @@ export default function DocProfile() {
 
             console.log("this is payload ", payload)
 
-            const detailsRes = await axios.put(`http://localhost:5000/doctors/${id}`, payload, {
+            await axios.put(`${API_BASE_URL}/doctors/${id}`, payload, {
                 headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
             });
 
             setIsEdit(false);
             fetcher();
             setLoading(false)
-        } catch (error: any) {
-            console.log("from doc profile update", error.message)
+        } catch (error: unknown) {
+            
+            if (error instanceof Error) {
+                console.log("from doc profile update", error.message)
+            } else {
+                console.log("Unknown error occurred from doc profile update");
+            }
             toast.error("Error while updating the data")
             setLoading(false)
         }
@@ -126,7 +148,7 @@ export default function DocProfile() {
     const slotsGenerateHandler = async () => {
 
         try {
-            setLoading(true)
+            setIsGenerating(true)
             const date = new Date()
 
             const slotsPayload = {
@@ -134,7 +156,7 @@ export default function DocProfile() {
                 date: date.toISOString().split("T")[0]
             }
 
-            const isSlots = await axios.get(`http://localhost:5000/slots/${slotsPayload.doctor_id}/${slotsPayload.date}` , {
+            const isSlots = await axios.get(`${API_BASE_URL}/slots/${slotsPayload.doctor_id}/${slotsPayload.date}` , {
                 headers: { Authorization: `Bearer ${token}`}
             })
 
@@ -146,21 +168,26 @@ export default function DocProfile() {
 
             console.log("slots payload ", slotsPayload)
 
-            const response = await axios.post(`http://localhost:5000/slots/generate`, slotsPayload, {
+            const response = await axios.post(`${API_BASE_URL}/slots/generate`, slotsPayload, {
                 headers: {"Content-Type": "application/json",Authorization: `Bearer ${token}` },
             });
 
             if(response.status == 200){
                 toast.success("slots generated for today")
-                setLoading(false)
+                setIsGenerating(false)
                 return
             }
 
 
-        } catch (error:any) {
-            console.log("error while generating the slots " , error.message)
+        } catch (error:unknown) {
+            
+            if (error instanceof Error) {
+                console.log("error while generating the slots " , error.message)
+            } else {
+                console.log("Unknown error occurred while generating the slots");
+            }
             toast.error("Error while generating the slots")
-            setLoading(false)
+            setIsGenerating(false)
         }
     }
     console.log("profile , ", profile)
@@ -265,12 +292,12 @@ export default function DocProfile() {
             </div>
 
 
-            <button className={styles.profileBtn} onClick={slotsGenerateHandler}>
-                {loading ? "Generating..." : "Generate Today's Slots"}
+            <button className={styles.profileBtn} onClick={slotsGenerateHandler} disabled={isGenerating}>
+                {isGenerating ? "Generating..." : "Generate Today's Slots"}
             </button>
 
 
-            {isEdit && <button className={styles.saveButton} onClick={handleSave}>
+            {isEdit && <button className={styles.saveButton} onClick={handleSave} disabled={loading}>
                 {loading ? "saving..." : "Save Changes"}
             </button>}
 

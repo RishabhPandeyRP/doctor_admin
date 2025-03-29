@@ -1,23 +1,28 @@
 .appDiv{
-    width: 80%;
-    padding: 1% 4%;
+    width: 100%;
+    padding: 1% 7%;
     border: 0px solid red;
     box-sizing: border-box;
 }
 .appStat{
-    border: 1px solid #1c4a2a;
-    background-color: #1c4a2a;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    padding: 2% 5%;
-    border-radius: 10px;
+    border: 0px solid #1c4a2a;
+    /* background-color: #1c4a2a; */
+    color: #1c4a2a;
+    /* display: flex;
+    justify-content: space-between; */
+    /* padding: 2% 5%; */
+    /* border-radius: 10px; */
     font-size: 30px;
     font-weight: 500;
     width: 100%;
     margin: 0% auto;
-    margin-bottom: 2%;
+    margin-bottom: 0%;
     letter-spacing: 1px;
+}
+
+.appStat hr{
+  margin-top: 0.5%;
+  color: #1c4a2a;
 }
 
 .appCardWrapper{
@@ -68,12 +73,15 @@
 
   .tableWrapper {
     overflow-x: auto;
+    border: 0px solid red;
+    height: 95%;
+    padding: 2% 2%;
   }
   
   .appTable {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    /* margin-top: 20px; */
   }
   
   .appTable th, .appTable td {
@@ -85,8 +93,8 @@
   }
 
   .appTable tr{
-    border: 1px solid #ddd;
-    background-color: #e7e7e7;
+    border: 0px solid #ddd;
+    /* background-color: #e7e7e7; */
     margin: 5px 0;
   }
   
@@ -105,29 +113,29 @@
   .cardStatus {
     padding: 5px 10px;
     border-radius: 4px;
-    font-weight: bold;
+    font-weight: semibold;
     text-align: center;
     display: inline-block;
   }
   
   .pending {
-    background-color: #ffcc00; /* Yellow */
-    color: #664d00;
+    /* background-color: #ffcc00; Yellow */
+    color: #ffcc00;
   }
   
   .approved {
-    background-color: #4caf50; /* Green */
-    color: #ffffff;
+    /* background-color: #4caf50; Green */
+    color: #4caf50;
   }
   
   .declined {
-    background-color: #f44336; /* Red */
-    color: #ffffff;
+    /* background-color: #f44336; Red */
+    color: #f44336;
   }
   
   .completed {
-    background-color: #2196f3; /* Blue */
-    color: #ffffff;
+    /* background-color: #2196f3; Blue */
+    color: #2196f3;
   }
   
   /* button {
@@ -164,3 +172,7 @@
     color: white;
 }
   
+.loader{
+  display: flex;
+  justify-content: center;
+}
