@@ -180,6 +180,7 @@ const CreateDoc = () => {
                 console.log("Unknown error occurred while registering doc ");
             }
             toast.error("error while registering doc")
+            setLoading(false)
         }
     }
 
