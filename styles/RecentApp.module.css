@@ -62,3 +62,25 @@
     font-size: 16px;
     color: #5b5b5b;
 }
+
+@media screen and (max-width: 1024px) {
+    .appStat{
+     font-size: 26px;
+    }
+
+    .patientname{
+        font-size: 18px;
+        color: #373737;
+    }
+    
+    .doctorname{
+        font-size: 14px;
+        color: #8c8c8c;
+    }
+    
+    .date{
+        font-size: 14px;
+        color: #5b5b5b;
+    }
+
+   }

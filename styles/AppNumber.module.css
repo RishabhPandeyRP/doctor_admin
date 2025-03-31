@@ -50,3 +50,11 @@
     color: rgb(13, 143, 3);
     font-weight: 600;
 }
+
+@media screen and (max-width: 1024px) {
+    .docNumCard{
+     width: 45%;
+     /* height: 150px; */
+     padding: 3% 4%;
+    }
+   }
