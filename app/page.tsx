@@ -4,7 +4,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-// import Image from "next/image";
 import DocNumber from "@/components/DocNumber";
 import styles from "./page.module.css";
 import AppNumber from "@/components/AppNumber";

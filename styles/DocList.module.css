@@ -3,8 +3,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    /* grid-template-columns: repeat(auto-fill , minmax(280px , 1fr)); */
-    /* gap: 5%; */
     border: 0px solid green;
 }
 

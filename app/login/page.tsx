@@ -8,7 +8,6 @@ import { useState } from "react"
 
 const Login = () => {
     const router = useRouter()
-    // const {login} = useAuthContext()
     const [formData , setFormData] = useState({
         email : "",
         password : ""

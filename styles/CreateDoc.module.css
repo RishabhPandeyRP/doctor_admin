@@ -1,6 +1,5 @@
 .docDiv {
     width: 100%;
-    /* min-height: 100vh; */
     background: linear-gradient(135deg, #f5f7fa 0%, #c3e2d2b5 100%);
     display: flex;
     align-items: center;
@@ -14,7 +13,6 @@
     width: 50%;
     border: 0px solid red;
     height: 95%;
-    /* max-width: 550px; */
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
@@ -25,7 +23,7 @@
     gap: 20px;
     position: relative;
     overflow: auto;
-    scrollbar-width: none;  /* Firefox */
+    scrollbar-width: none; 
     -ms-overflow-style: none;
 
   }

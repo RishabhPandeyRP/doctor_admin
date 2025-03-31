@@ -29,9 +29,6 @@ export default function DocProfile() {
     const [image, setImage] = useState<File | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
     const [isGenerating , setIsGenerating] = useState<boolean>(false)
-
-    // const Cookie = await cookies()
-    // const token = Cookie.get("token")?.value;
     const params = useParams()
     const id = params?.id
     const token = Cookies.get("admin-token")
@@ -73,7 +70,6 @@ export default function DocProfile() {
     const editToggle = () => { setIsEdit(!isEdit) }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        // setProfile({ ...profile, [e.target.name]: e.target.value });
         const { name, value } = e.target;
 
         setProfile((prev) => prev ?({
@@ -114,8 +110,6 @@ export default function DocProfile() {
             const payload = {
                 specialty: profile.specialty,
                 photo_url: imageUrl || null,
-                // rating: ,
-                // location: ,
                 gender: profile.gender,
                 experience: profile.experience,
                 diseases: (profile.diseases)

@@ -26,8 +26,8 @@
     width: 100%;
     margin : 0 auto;
     border: 0px solid red;
-    scrollbar-width: none; /* For Firefox */
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
 }
 
 .docContainer::-webkit-scrollbar {
