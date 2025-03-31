@@ -28,3 +28,25 @@
     cursor: pointer;
 }
 
+.navbtnlogout{
+    width: 25%;
+    border: 0px solid black;
+    display: flex;
+    justify-content:end;
+    align-items: center;
+    gap: 10%;
+}
+
+.signupbtn {
+    /* height: 40px; */
+    padding: 10px 30px;
+    font-size: 16px;
+    font-weight: 500;
+    border: 0px solid black;
+    border-radius: 10px;
+    background-color: #1C4A2A;
+    color: white;
+    cursor: pointer;
+}
+
+

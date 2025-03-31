@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 import {Montserrat} from "next/font/google"
 import { Metadata } from "next";
+import { AuthProvider } from "@/context/AppContext";
 
 export const metadata:Metadata = {
   title: "Admin",
@@ -29,12 +30,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={montserrat.variable}>
       <body className="">
+      <AuthProvider>
         <NavBar></NavBar>
         <div className="layout-content">
           {children}
         </div>
         <Footer></Footer>
         <Toaster position="top-right"></Toaster>
+        </AuthProvider>
       </body>
     </html>
   );
